@@ -75,12 +75,12 @@ Nav links on the homepage use `href="#section-id"` (plain anchors). Nav links fr
 | `id` | `number` | Unique |
 | `slug` | `string` | Used in URL `/:category/:slug` |
 | `category` | `Category` | `'history'` \| `'culture'` \| `'thai-society'` |
-| `date` | `string` | Display date (YYYY-MM-DD) |
-| `readMin` | `number` | Estimated read time |
 | `image` | `string?` | Optional — path from `public/`, e.g. `'/images/mythical-origins.jpg'` |
 | `title` | `{ en, th }` | Bilingual |
 | `summary` | `{ en, th }` | Shown on PostCard; bilingual |
 | `body` | `{ en: string[], th: string[] }` | Each string = one paragraph; shown on PostPage |
+
+`date` and `readMin` have been removed from both the interface and all post objects.
 
 **To add content for a post:** fill in its `body.en` and `body.th` arrays in `posts.ts`, and set `image` to the filename in `public/images/`.
 
