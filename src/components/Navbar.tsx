@@ -10,7 +10,7 @@ export default function Navbar() {
           {t.nav.brand}
         </Link>
         <div className="hidden md:flex items-center gap-6 text-sm text-gray-600">
-          <Link to="/" className="hover:text-emerald-700 transition-colors">{t.nav.home}</Link>
+          <Link to="/#hero" className="hover:text-emerald-700 transition-colors">{t.nav.home}</Link>
           <Link to="/#history" className="hover:text-emerald-700 transition-colors">{t.nav.history}</Link>
           <Link to="/#culture" className="hover:text-emerald-700 transition-colors">{t.nav.culture}</Link>
           <Link to="/#thai-society" className="hover:text-emerald-700 transition-colors">{t.nav.thaiSociety}</Link>

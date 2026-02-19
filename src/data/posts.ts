@@ -6,23 +6,11 @@ export interface Post {
   category: Category
   date: string
   readMin: number
+  image?: string               // path relative to public/, e.g. '/images/mythical-origins.jpg'
   title: { en: string; th: string }
   summary: { en: string; th: string }
-  body: { en: string[]; th: string[] }
+  body: { en: string[]; th: string[] }  // each string is one paragraph
 }
-
-// Placeholder body paragraphs — replace with real content per post.
-const BODY_EN = [
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-  'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.',
-  'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est qui dolorem ipsum quia dolor sit amet consectetur adipisci velit, sed quia non numquam eius modi tempora incidunt.',
-]
-
-const BODY_TH = [
-  'ข้อความตัวอย่างสำหรับบทความนี้ ซึ่งจะถูกแทนที่ด้วยเนื้อหาจริงในภายหลัง เนื้อหาของบทความนี้จะให้ข้อมูลเชิงลึกและรายละเอียดที่ครบถ้วนเกี่ยวกับหัวข้อที่น่าสนใจ โดยเขียนขึ้นเพื่อให้ผู้อ่านได้รับความรู้และความเข้าใจอย่างถ่องแท้',
-  'รายละเอียดเพิ่มเติมในส่วนนี้จะอธิบายถึงความเป็นมาและความสำคัญของเรื่องราวที่นำเสนอ โดยใช้ภาษาที่เข้าใจง่ายและเหมาะสมกับผู้อ่านทุกระดับ เพื่อให้ผู้ที่สนใจสามารถติดตามและทำความเข้าใจได้โดยไม่ยาก',
-  'บทสรุปของบทความนี้จะรวบรวมประเด็นสำคัญทั้งหมดและนำเสนอในมุมมองที่ครอบคลุม เพื่อให้ผู้อ่านได้รับประโยชน์สูงสุดจากการอ่านบทความนี้ และสามารถนำความรู้ที่ได้ไปประยุกต์ใช้ในชีวิตประจำวันได้',
-]
 
 export const posts: Post[] = [
   // ── History ────────────────────────────────────────────────────────────────
@@ -40,7 +28,7 @@ export const posts: Post[] = [
       en: 'Legend holds that the Emerald Buddha was crafted in India around 43 BCE. Discover how this sacred image made its way across Southeast Asia before arriving in Thailand.',
       th: 'ตำนานกล่าวว่าพระแก้วมรกตถูกสร้างขึ้นในอินเดียเมื่อราว 43 ปีก่อนคริสตกาล สำรวจว่าพระพุทธรูปศักดิ์สิทธิ์นี้เดินทางข้ามเอเชียตะวันออกเฉียงใต้มายังไทยได้อย่างไร',
     },
-    body: { en: BODY_EN, th: BODY_TH },
+    body: { en: [], th: [] },
   },
   {
     id: 2,
@@ -56,7 +44,7 @@ export const posts: Post[] = [
       en: 'From Chiang Rai to Chiang Mai, Luang Prabang to Vientiane — the Emerald Buddha changed hands many times before King Taksin reclaimed it for Siam in 1779.',
       th: 'จากเชียงรายสู่เชียงใหม่ หลวงพระบางสู่เวียงจันทน์ พระแก้วมรกตเปลี่ยนมือหลายครั้งก่อนที่สมเด็จพระเจ้ากรุงธนบุรีจะทรงนำกลับคืนสู่สยามในปี 2322',
     },
-    body: { en: BODY_EN, th: BODY_TH },
+    body: { en: [], th: [] },
   },
   {
     id: 3,
@@ -72,7 +60,7 @@ export const posts: Post[] = [
       en: 'In 1784, King Rama I enshrined the Emerald Buddha in Wat Phra Kaew within Bangkok\'s Grand Palace complex. Explore how the Chakri dynasty cemented the image as the palladium of Thailand.',
       th: 'ในปี 2327 พระบาทสมเด็จพระพุทธยอดฟ้าจุฬาโลกมหาราชทรงประดิษฐานพระแก้วมรกตไว้ในวัดพระแก้ว ภายในพระบรมมหาราชวัง กรุงเทพมหานคร สำรวจว่าราชวงศ์จักรีทรงสถาปนาพระพุทธรูปนี้ให้เป็น "ปัลลาเดียม" ของไทยได้อย่างไร',
     },
-    body: { en: BODY_EN, th: BODY_TH },
+    body: { en: [], th: [] },
   },
 
   // ── Culture ─────────────────────────────────────────────────────────────────
@@ -90,7 +78,7 @@ export const posts: Post[] = [
       en: 'Three times a year, the King of Thailand performs a centuries-old ceremony to change the Emerald Buddha\'s golden robes — one each for summer, rainy season, and cool season.',
       th: 'ปีละสามครั้ง พระมหากษัตริย์ไทยทรงประกอบพระราชพิธีเปลี่ยนเครื่องทรงพระแก้วมรกต ซึ่งมีอายุนานหลายศตวรรษ โดยมีชุดสำหรับฤดูร้อน ฤดูฝน และฤดูหนาว',
     },
-    body: { en: BODY_EN, th: BODY_TH },
+    body: { en: [], th: [] },
   },
   {
     id: 5,
@@ -106,7 +94,7 @@ export const posts: Post[] = [
       en: 'The temple complex surrounding the Emerald Buddha is a masterpiece of traditional Thai architecture and mural painting, depicting scenes from the Ramakien epic.',
       th: 'บริเวณวัดที่ล้อมรอบพระแก้วมรกตเป็นผลงานชิ้นเอกของสถาปัตยกรรมไทยดั้งเดิมและภาพจิตรกรรมฝาผนัง ซึ่งแสดงฉากจากมหากาพย์รามเกียรติ์',
     },
-    body: { en: BODY_EN, th: BODY_TH },
+    body: { en: [], th: [] },
   },
   {
     id: 6,
@@ -122,7 +110,7 @@ export const posts: Post[] = [
       en: 'For Thais and Buddhist devotees worldwide, visiting the Emerald Buddha is a deeply spiritual act. Learn about the offerings, prayers, and cultural etiquette observed at Wat Phra Kaew.',
       th: 'สำหรับชาวไทยและผู้ศรัทธาในพระพุทธศาสนาทั่วโลก การมาเยือนพระแก้วมรกตเป็นการกระทำทางจิตวิญญาณที่ลึกซึ้ง เรียนรู้เกี่ยวกับเครื่องสักการะ การอธิษฐาน และมารยาทวัฒนธรรมที่ปฏิบัติ ณ วัดพระแก้ว',
     },
-    body: { en: BODY_EN, th: BODY_TH },
+    body: { en: [], th: [] },
   },
 
   // ── Thai Society ─────────────────────────────────────────────────────────────
@@ -140,7 +128,7 @@ export const posts: Post[] = [
       en: 'The Emerald Buddha is more than a religious object — it is a symbol of Thai sovereignty and national unity. Explore its role in shaping modern Thai identity and statecraft.',
       th: 'พระแก้วมรกตมิใช่เพียงวัตถุทางศาสนาเท่านั้น แต่ยังเป็นสัญลักษณ์แห่งอำนาจอธิปไตยและความเป็นเอกภาพของชาติไทย สำรวจบทบาทในการหล่อหลอมอัตลักษณ์และรัฐกิจไทยสมัยใหม่',
     },
-    body: { en: BODY_EN, th: BODY_TH },
+    body: { en: [], th: [] },
   },
   {
     id: 8,
@@ -156,7 +144,7 @@ export const posts: Post[] = [
       en: 'From coronation ceremonies to royal prayers for rain, the Emerald Buddha sits at the intersection of Thai monarchy and spiritual power. Understand this unique constitutional relationship.',
       th: 'ตั้งแต่พระราชพิธีบรมราชาภิเษกจนถึงพระราชพิธีขอฝน พระแก้วมรกตอยู่ ณ จุดตัดระหว่างสถาบันพระมหากษัตริย์ไทยและอำนาจทางจิตวิญญาณ ทำความเข้าใจความสัมพันธ์ตามรัฐธรรมนูญอันเป็นเอกลักษณ์นี้',
     },
-    body: { en: BODY_EN, th: BODY_TH },
+    body: { en: [], th: [] },
   },
   {
     id: 9,
@@ -172,7 +160,7 @@ export const posts: Post[] = [
       en: 'Beyond the palace walls, the Emerald Buddha\'s image appears in homes, amulets, and festivals. Discover how this sacred icon permeates the daily spiritual life of ordinary Thai citizens.',
       th: 'นอกจากพระบรมมหาราชวังแล้ว ภาพพระแก้วมรกตยังปรากฏในบ้านเรือน เครื่องรางของขลัง และงานเทศกาลต่าง ๆ ค้นพบว่าพระพุทธรูปศักดิ์สิทธิ์นี้แทรกซึมอยู่ในชีวิตประจำวันของชาวไทยทั่วไปอย่างไร',
     },
-    body: { en: BODY_EN, th: BODY_TH },
+    body: { en: [], th: [] },
   },
 ]
 

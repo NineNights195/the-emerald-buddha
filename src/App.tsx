@@ -1,11 +1,11 @@
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom'
 import { LanguageProvider, useLanguage } from './contexts/LanguageContext'
 import { posts } from './data/posts'
 import type { Category, Post } from './data/posts'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import PostPage from './pages/PostPage'
-import './App.css'
 
 // ── Category style maps ─────────────────────────────────────────────────────
 
@@ -27,26 +27,29 @@ const IMG_PLACEHOLDER_BG: Record<Category, string> = {
   'thai-society': 'from-sky-50 to-cyan-50',
 }
 
-const LOREM = [
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.',
-  'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.',
-  'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse.',
-]
-
 // ── Image socket ────────────────────────────────────────────────────────────
 
-function ImageSocket({ category, index }: { category: Category; index: number }) {
+function ImageSocket({ category, src, size = 'card' }: { category: Category; src?: string; size?: 'card' | 'cover' }) {
+  const rounded = size === 'cover' ? 'rounded-2xl' : 'rounded-xl'
+  const iconSize = size === 'cover' ? 52 : 36
+
+  if (src) {
+    return (
+      <div className={`relative aspect-video w-full ${rounded} overflow-hidden ring-1 ring-inset ring-black/5`}>
+        <img src={src} alt="" className="w-full h-full object-cover" />
+      </div>
+    )
+  }
+
   return (
-    <div
-      className={`relative aspect-video w-full rounded-xl overflow-hidden bg-gradient-to-br ${IMG_PLACEHOLDER_BG[category]} ring-1 ring-inset ring-black/5`}
-    >
+    <div className={`relative aspect-video w-full ${rounded} overflow-hidden bg-gradient-to-br ${IMG_PLACEHOLDER_BG[category]} ring-1 ring-inset ring-black/5`}>
       <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-gray-300 select-none">
-        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+        <svg width={iconSize} height={iconSize} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
           <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
           <circle cx="8.5" cy="8.5" r="1.5" />
           <polyline points="21 15 16 10 5 21" />
         </svg>
-        <span className="text-[11px] font-medium tracking-wide">Image {index + 1}</span>
+        <span className="text-[11px] font-medium tracking-wide">Add image</span>
       </div>
     </div>
   )
@@ -54,7 +57,7 @@ function ImageSocket({ category, index }: { category: Category; index: number })
 
 // ── Post card ───────────────────────────────────────────────────────────────
 
-function PostCard({ post, index }: { post: Post; index: number }) {
+function PostCard({ post }: { post: Post }) {
   const { t, language } = useLanguage()
   const chip = CATEGORY_CHIP[post.category]
   const label = CATEGORY_LABEL[post.category][language]
@@ -62,11 +65,10 @@ function PostCard({ post, index }: { post: Post; index: number }) {
   return (
     <article className="bg-white rounded-2xl border border-gray-200 overflow-hidden flex flex-col group hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200">
       {/* ── Header row ─────────────────────────────────────────── */}
-      <div className="px-5 pt-5 flex items-center justify-between gap-3">
+      <div className="px-5 pt-5">
         <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold ring-1 ${chip}`}>
           {label}
         </span>
-        <time className="text-[11px] text-gray-400 shrink-0">{post.date}</time>
       </div>
 
       {/* ── Title ──────────────────────────────────────────────── */}
@@ -76,25 +78,19 @@ function PostCard({ post, index }: { post: Post; index: number }) {
         </h3>
       </div>
 
-      {/* ── Image socket ───────────────────────────────────────── */}
+      {/* ── Image ──────────────────────────────────────────────── */}
       <div className="px-5">
-        <ImageSocket category={post.category} index={index} />
+        <ImageSocket category={post.category} src={post.image} />
       </div>
 
-      {/* ── Lorem ipsum body ───────────────────────────────────── */}
+      {/* ── Summary ────────────────────────────────────────────── */}
       <div className="px-5 pt-4 pb-5 flex flex-col flex-1">
         <p className="text-[13px] text-gray-500 leading-relaxed flex-1">
-          {LOREM[index % LOREM.length]}
+          {post.summary[language]}
         </p>
 
         {/* ── Footer meta ──────────────────────────────────────── */}
-        <div className="mt-5 pt-4 border-t border-gray-100 flex items-center justify-between">
-          <span className="text-[11px] text-gray-400 flex items-center gap-1.5">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
-            </svg>
-            {post.readMin} {t.card.minRead}
-          </span>
+        <div className="mt-5 pt-4 border-t border-gray-100 flex justify-end">
           <Link
             to={`/${post.category}/${post.slug}`}
             className="text-[12px] text-emerald-700 font-semibold group-hover:text-emerald-900 transition-colors"
@@ -134,8 +130,8 @@ function Section({
           <p className="text-gray-500 max-w-2xl text-[15px] leading-relaxed">{description}</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {sectionPosts.map((post, i) => (
-            <PostCard key={post.id} post={post} index={i} />
+          {sectionPosts.map((post) => (
+            <PostCard key={post.id} post={post} />
           ))}
         </div>
       </div>
@@ -145,11 +141,36 @@ function Section({
 
 // ── Hero ────────────────────────────────────────────────────────────────────
 
+// Place your hero photo at public/images/hero.jpg
+const HERO_IMAGE = '/images/hero.jpg'
+
 function Hero() {
   const { t } = useLanguage()
+  const [imgLoaded, setImgLoaded] = useState(false)
+  const [contentVisible, setContentVisible] = useState(false)
+
+  useEffect(() => {
+    const id = setTimeout(() => setContentVisible(true), 80)
+    return () => clearTimeout(id)
+  }, [])
+
   return (
-    <section className="pt-32 pb-24 px-4 bg-gradient-to-b from-emerald-950 to-emerald-900 text-white text-center">
-      <div className="max-w-3xl mx-auto">
+    <section id="hero" className="relative pt-32 pb-24 px-4 bg-gradient-to-b from-emerald-950 to-emerald-900 text-white text-center overflow-hidden">
+
+      {/* ── Background image — fades in once loaded ─────────────── */}
+      <img
+        src={HERO_IMAGE}
+        alt=""
+        aria-hidden="true"
+        onLoad={() => setImgLoaded(true)}
+        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${imgLoaded ? 'opacity-30' : 'opacity-0'}`}
+      />
+
+      {/* ── Dark gradient overlay ───────────────────────────────── */}
+      <div className="absolute inset-0 bg-gradient-to-b from-emerald-950/70 via-emerald-950/50 to-emerald-900/85 pointer-events-none" />
+
+      {/* ── Content — fade up on mount ──────────────────────────── */}
+      <div className={`relative max-w-3xl mx-auto transition-all duration-700 ease-out ${contentVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
         <span className="inline-block bg-emerald-700/50 border border-emerald-500/40 text-emerald-200 text-xs font-semibold uppercase tracking-widest px-4 py-1.5 rounded-full mb-8">
           {t.hero.badge}
         </span>
@@ -178,6 +199,22 @@ function Hero() {
 
 function HomePage() {
   const { t } = useLanguage()
+  const location = useLocation()
+
+  useEffect(() => {
+    // Scroll to hash section if hash is present in URL
+    if (location.hash) {
+      const hash = location.hash.replace('#', '')
+      const element = document.getElementById(hash)
+      if (element) {
+        // Small delay to ensure page is rendered
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' })
+        }, 100)
+      }
+    }
+  }, [location.hash])
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />

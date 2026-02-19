@@ -51,6 +51,8 @@ export default function PostPage() {
     'thai-society': t.nav.thaiSociety,
   }
 
+  const bodyParagraphs = post.body[language]
+
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <Navbar />
@@ -74,14 +76,6 @@ export default function PostPage() {
             <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold ring-1 ${chip}`}>
               {categoryLabel[post.category]}
             </span>
-            <time className="text-[12px] text-gray-400">{post.date}</time>
-            <span className="text-gray-200">·</span>
-            <span className="text-[12px] text-gray-400 flex items-center gap-1">
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
-              </svg>
-              {post.readMin} {t.card.minRead}
-            </span>
           </div>
 
           {/* ── Title ──────────────────────────────────────────────── */}
@@ -89,26 +83,38 @@ export default function PostPage() {
             {post.title[language]}
           </h1>
 
-          {/* ── Cover image socket ─────────────────────────────────── */}
-          <div className={`relative aspect-video w-full rounded-2xl overflow-hidden bg-gradient-to-br ${imgBg} ring-1 ring-inset ring-black/5 mb-10`}>
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-gray-300 select-none">
-              <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                <circle cx="8.5" cy="8.5" r="1.5" />
-                <polyline points="21 15 16 10 5 21" />
-              </svg>
-              <span className="text-[13px] font-medium tracking-wide">Cover Image</span>
-            </div>
+          {/* ── Cover image ────────────────────────────────────────── */}
+          <div className="mb-10">
+            {post.image ? (
+              <div className="relative aspect-video w-full rounded-2xl overflow-hidden ring-1 ring-inset ring-black/5">
+                <img src={post.image} alt={post.title[language]} className="w-full h-full object-cover" />
+              </div>
+            ) : (
+              <div className={`relative aspect-video w-full rounded-2xl overflow-hidden bg-gradient-to-br ${imgBg} ring-1 ring-inset ring-black/5`}>
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-gray-300 select-none">
+                  <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                    <circle cx="8.5" cy="8.5" r="1.5" />
+                    <polyline points="21 15 16 10 5 21" />
+                  </svg>
+                  <span className="text-[13px] font-medium tracking-wide">Add image</span>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* ── Body text ──────────────────────────────────────────── */}
-          <div className="space-y-5">
-            {post.body[language].map((para, i) => (
-              <p key={i} className="text-[15px] text-gray-700 leading-relaxed">
-                {para}
-              </p>
-            ))}
-          </div>
+          {bodyParagraphs.length > 0 ? (
+            <div className="space-y-5">
+              {bodyParagraphs.map((para, i) => (
+                <p key={i} className="text-[15px] text-gray-700 leading-relaxed">
+                  {para}
+                </p>
+              ))}
+            </div>
+          ) : (
+            <p className="text-gray-300 text-sm italic">Content coming soon.</p>
+          )}
 
         </div>
       </main>
