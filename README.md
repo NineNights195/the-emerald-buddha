@@ -98,10 +98,30 @@ This project was built with assistance from **Claude Code** (Anthropic).
 
 ## Deployment
 
-The site is a fully static SPA — no backend required.
+The site runs in Docker and is exposed via a Cloudflare Tunnel — no open ports or SSL certificates needed.
 
-```bash
-pnpm build        # outputs to dist/
-```
+### Prerequisites
 
-Upload `dist/` to any static host (Vercel, Netlify, GitHub Pages). Make sure the host is configured to redirect all routes to `index.html` for client-side routing to work.
+- Docker with Docker Compose
+- A Cloudflare Tunnel configured with public hostname `emerald-buddha.website` → `http://app:8080`
+
+### Setup
+
+1. Copy the tunnel token from the Cloudflare dashboard and create `.env`:
+   ```
+   TUNNEL_TOKEN=your_tunnel_token_here
+   ```
+
+2. Run:
+   ```bash
+   ./deploy.sh
+   ```
+
+This builds the image and starts two containers:
+
+| Container | Role |
+|-----------|------|
+| `emerald-buddha-app` | nginx serving the built React app on port 8080 |
+| `emerald-buddha-tunnel` | cloudflared connecting the app to Cloudflare |
+
+Both containers restart automatically unless stopped manually.

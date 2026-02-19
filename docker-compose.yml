@@ -1,0 +1,21 @@
+services:
+  app:
+    build: .
+    container_name: emerald-buddha-app
+    restart: unless-stopped
+    networks:
+      - internal
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: emerald-buddha-tunnel
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run --token ${TUNNEL_TOKEN}
+    networks:
+      - internal
+    depends_on:
+      - app
+
+networks:
+  internal:
+    driver: bridge
