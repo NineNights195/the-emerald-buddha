@@ -4,8 +4,6 @@ export interface Post {
   id: number
   slug: string
   category: Category
-  date: string
-  readMin: number
   image?: string               // path relative to public/, e.g. '/images/mythical-origins.jpg'
   title: { en: string; th: string }
   summary: { en: string; th: string }
@@ -16,33 +14,29 @@ export const posts: Post[] = [
   // ── History ────────────────────────────────────────────────────────────────
   {
     id: 1,
-    slug: 'mythical-origins',
+    slug: 'brief-history',
     category: 'history',
-    date: '2025-01-10',
-    readMin: 6,
     title: {
-      en: 'Mythical Origins: From Ancient India to Chiang Rai',
-      th: 'ต้นกำเนิดในตำนาน: จากอินเดียโบราณสู่เชียงราย',
+      en: 'A Brief History: The Emerald Buddha',
+      th: 'ประวัติศาสตร์โดยย่อ: พระพุทธมหามณีรัตนปฏิมากร',
     },
     summary: {
-      en: 'Legend holds that the Emerald Buddha was crafted in India around 43 BCE. Discover how this sacred image made its way across Southeast Asia before arriving in Thailand.',
-      th: 'ตำนานกล่าวว่าพระแก้วมรกตถูกสร้างขึ้นในอินเดียเมื่อราว 43 ปีก่อนคริสตกาล สำรวจว่าพระพุทธรูปศักดิ์สิทธิ์นี้เดินทางข้ามเอเชียตะวันออกเฉียงใต้มายังไทยได้อย่างไร',
+      en: 'Why is the Emerald Buddha revered as Thailand’s most sacred palladium, and how did it travel across multiple kingdoms before arriving in Bangkok? Behind the green jade image lies a compelling blend of legend, history, and sacred artistry.',
+      th: 'เหตุใด "พระแก้วมรกต" จึงได้รับการยกย่องเป็นพระพุทธรูปคู่บ้านคู่เมืองไทย และต้องเดินทางผ่านหลายอาณาจักรกว่าจะมาถึงกรุงเทพฯ ในปัจจุบัน? เบื้องหลังองค์พระสีเขียวดุจมรกตนี้มีทั้งตำนาน ประวัติศาสตร์ และพุทธศิลป์ที่น่าค้นหา',
     },
     body: { en: [], th: [] },
   },
   {
     id: 2,
-    slug: 'journey-through-kingdoms',
+    slug: 'mythical-origins',
     category: 'history',
-    date: '2025-02-03',
-    readMin: 8,
     title: {
-      en: 'A Journey Through Kingdoms: Laos, Cambodia & Siam',
-      th: 'การเดินทางผ่านอาณาจักร: ลาว กัมพูชา และสยาม',
+      en: 'Mythical Origins: From Ancient India to Chiang Rai',
+      th: 'ต้นกำเนิดในตำนาน: จากอินเดียโบราณสู่เชียงราย',
     },
     summary: {
-      en: 'From Chiang Rai to Chiang Mai, Luang Prabang to Vientiane — the Emerald Buddha changed hands many times before King Taksin reclaimed it for Siam in 1779.',
-      th: 'จากเชียงรายสู่เชียงใหม่ หลวงพระบางสู่เวียงจันทน์ พระแก้วมรกตเปลี่ยนมือหลายครั้งก่อนที่สมเด็จพระเจ้ากรุงธนบุรีจะทรงนำกลับคืนสู่สยามในปี 2322',
+      en: 'How did the Emerald Buddha, Thailand’s most sacred Buddha image, come into existence—and why did it journey across multiple kingdoms before enshrined in Siam? Ancient Lanna legends preserve this remarkable and fascinating story.',
+      th: 'พระแก้วมรกต พระพุทธรูปศักดิ์สิทธิ์คู่บ้านคู่เมืองไทย มีที่มาอย่างไร และเหตุใดจึงเดินทางผ่านอาณาจักรมากมายก่อนจะประดิษฐานในสยาม? ตำนานโบราณจากล้านนาได้บันทึกเรื่องราวอันน่าอัศจรรย์นี้ไว้อย่างน่าสนใจ',
     },
     body: { en: [], th: [] },
   },
@@ -50,8 +44,6 @@ export const posts: Post[] = [
     id: 3,
     slug: 'grand-palace-enshrined',
     category: 'history',
-    date: '2025-03-15',
-    readMin: 5,
     title: {
       en: 'Enshrined at the Grand Palace: The Chakri Era',
       th: 'ประดิษฐาน ณ พระบรมมหาราชวัง: ยุครัตนโกสินทร์',
@@ -68,8 +60,6 @@ export const posts: Post[] = [
     id: 4,
     slug: 'three-seasonal-robes',
     category: 'culture',
-    date: '2025-01-22',
-    readMin: 7,
     title: {
       en: 'The Three Seasonal Robes: A Living Ceremony',
       th: 'เครื่องทรงสามฤดู: พิธีกรรมที่ยังมีชีวิต',
@@ -84,8 +74,6 @@ export const posts: Post[] = [
     id: 5,
     slug: 'wat-phra-kaew-art',
     category: 'culture',
-    date: '2025-02-14',
-    readMin: 9,
     title: {
       en: 'Wat Phra Kaew: A Canvas of Thai Sacred Art',
       th: 'วัดพระแก้ว: ผ้าใบแห่งศิลปะศักดิ์สิทธิ์ไทย',
@@ -100,8 +88,6 @@ export const posts: Post[] = [
     id: 6,
     slug: 'merit-making-pilgrimage',
     category: 'culture',
-    date: '2025-04-05',
-    readMin: 5,
     title: {
       en: 'Merit-Making Pilgrimages to the Sacred Image',
       th: 'การแสวงบุญเพื่อทำบุญกับพระพุทธรูปศักดิ์สิทธิ์',
@@ -118,8 +104,6 @@ export const posts: Post[] = [
     id: 7,
     slug: 'national-palladium',
     category: 'thai-society',
-    date: '2025-01-30',
-    readMin: 6,
     title: {
       en: 'The National Palladium: Identity and Sovereignty',
       th: 'ปัลลาเดียมแห่งชาติ: อัตลักษณ์และอำนาจอธิปไตย',
@@ -134,8 +118,6 @@ export const posts: Post[] = [
     id: 8,
     slug: 'monarchy-and-the-emerald-buddha',
     category: 'thai-society',
-    date: '2025-03-01',
-    readMin: 7,
     title: {
       en: 'The Monarchy and the Sacred Jewel of the Realm',
       th: 'สถาบันพระมหากษัตริย์และแก้วศักดิ์สิทธิ์แห่งแผ่นดิน',
@@ -150,8 +132,6 @@ export const posts: Post[] = [
     id: 9,
     slug: 'emerald-buddha-in-everyday-thai-life',
     category: 'thai-society',
-    date: '2025-04-18',
-    readMin: 5,
     title: {
       en: 'The Emerald Buddha in Everyday Thai Life',
       th: 'พระแก้วมรกตในชีวิตประจำวันของชาวไทย',
