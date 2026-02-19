@@ -11,6 +11,23 @@ pnpm lint         # Run ESLint
 pnpm preview      # Preview production build locally
 ```
 
+## Deployment
+
+The app is deployed via Docker + Cloudflare Tunnel. Key files:
+
+| File | Purpose |
+|------|---------|
+| `Dockerfile` | Multi-stage build: Node/pnpm builds `dist/`, nginx serves it on port 8080 |
+| `docker-compose.yml` | Defines `app` (nginx) and `cloudflared` (tunnel) containers on a shared internal network |
+| `deploy.sh` | Runs `docker compose up -d --build` |
+| `.env` | Contains `TUNNEL_TOKEN` — gitignored, never commit |
+
+```bash
+./deploy.sh       # Build image and start both containers
+```
+
+The tunnel URL (`http://app:8080`) uses the container name `app` because both services share the `internal` Docker network. Cloudflare handles TLS; nginx serves plain HTTP internally.
+
 ## Stack
 
 - **React 19** with TypeScript, bundled by **Vite 7**
